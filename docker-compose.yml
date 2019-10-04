@@ -1,6 +1,15 @@
   version: '3.4'
 
   services:
+    nginx:
+      image: nginx
+      volumes:
+        - ./site.conf:/etc/nginx/conf.d/default.conf
+      ports:
+        - 81:80
+      depends_on:
+        - rails
+
     postgres:
       image: postgres:11.1
       volumes:
