@@ -18,6 +18,13 @@
       ports:
         - 5432:5432
 
+    redis:
+      image: redis:latest
+      volumes:
+       - redis:/data
+      ports:
+        - 6379:6379
+
     rails:
       build:
         context: .
@@ -48,6 +55,7 @@
         - EDITOR=vi
       depends_on:
         - postgres
+        - redis
 
     webpacker:
       build:
