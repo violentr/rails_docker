@@ -17,6 +17,10 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY . /app/
+
+RUN bundle install
+RUN yarn install
+
 RUN /app/check_dependencies.sh
 
 ENV GEM_HOME=/bundle
