@@ -17,16 +17,14 @@ RUN mkdir /app
 WORKDIR /app
 
 COPY . /app/
+RUN /app/check_dependencies.sh
 
 ENV GEM_HOME=/bundle
 ENV BUNDLE_PATH $GEM_HOME
 
 RUN gem install bundler --version=2.0.2
 
-RUN bundle install
-
-RUN yarn install
-
 EXPOSE 3000
 
-CMD ["bundle", "exec","rails", "s", "-b", "0.0.0.0"]
+
+CMD ["bundle","exec","rails", "s", "-b", "0.0.0.0"]
