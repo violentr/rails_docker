@@ -17,22 +17,25 @@ RUN apt-get update -qq && \
     yarn=1.17.3-1 \
     $(cat /tmp/Aptfile | xargs)
 
-RUN mkdir /app
-WORKDIR /app
-
-COPY . /app/
-
-RUN bundle install
-RUN yarn install
-
-RUN /app/check_dependencies.sh
+ENV APP_PATH=/app/
+RUN mkdir $APP_PATH
 
 ENV GEM_HOME=/bundle
 ENV BUNDLE_PATH $GEM_HOME
 
+WORKDIR $APP_PATH
+COPY Gemfile Gemfile.lock $APP_PATH
+
 RUN gem install bundler --version=2.0.2
 
-EXPOSE 3000
+RUN bundle install --jobs=2
 
+COPY package.json yarn.lock $APP_PATH
+RUN yarn install
+
+COPY . $APP_PATH
+RUN /app/check_dependencies.sh
+
+EXPOSE 3000
 
 CMD ["bundle","exec","rails", "s", "-b", "0.0.0.0"]
