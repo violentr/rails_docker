@@ -19,12 +19,13 @@ default: &default
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
+  url: <%= ENV.fetch("DATABASE_URL" , "postgres://postgres:postgres@#{ENV.fetch('PGHOST', 'postgres')}:5432") %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
   database: docker_development
-  url: <%= ENV["DATABASE_URL"] %>
+
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
