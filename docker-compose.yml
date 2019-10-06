@@ -58,7 +58,7 @@
         - redis
 
     runner:
-      image: docker_app:1.3
+      image: docker_app:1.0
       command: /bin/bash
       volumes:
         - .:/app:cached
