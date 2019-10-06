@@ -4,15 +4,10 @@ function install_dependency(){
   if [ -f $file ]
   then
     dependency="$(git diff $file | wc -w)"
-    if (($dependency > 0 ))
+    if ([ $dependency -gt 0 ] && echo "[+] Installing Dependencies: $cmd ");
     then
-      echo -e "[+] Installing Dependencies: '$cmd'"
-      $cmd
-    else
-      echo -e "[-]  No need to run : $cmd"
+      bash -c $cmd
     fi
-  else
-    echo -e "[-] File $file does not exist"
   fi
 }
 cmd="bundle install"
